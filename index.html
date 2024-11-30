@@ -40,7 +40,7 @@
             background-color: #f1f1f1;
             border-radius: 10px;
             cursor: pointer;
-            transition: transform 0.2s ease;
+            transition: transform 0.2s ease, background-color 0.3s ease, opacity 0.5s ease;
         }
 
         .tile:hover {
@@ -186,11 +186,27 @@
             firstTile = null;
         }
 
-        // Swap two tiles
+        // Swap two tiles with a smooth transition
         function swapTiles(tile1, tile2) {
-            const temp = grid[tile1.row][tile1.col];
-            grid[tile1.row][tile1.col] = grid[tile2.row][tile2.col];
-            grid[tile2.row][tile2.col] = temp;
+            const tile1Element = document.querySelector(`[data-row="${tile1.row}"][data-col="${tile1.col}"]`);
+            const tile2Element = document.querySelector(`[data-row="${tile2.row}"][data-col="${tile2.col}"]`);
+            const tile1Content = tile1Element.textContent;
+            const tile2Content = tile2Element.textContent;
+
+            // Add a CSS transition class to trigger the effect
+            tile1Element.classList.add('swap');
+            tile2Element.classList.add('swap');
+
+            // Swap the contents
+            tile1Element.textContent = tile2Content;
+            tile2Element.textContent = tile1Content;
+
+            // Remove the class after transition
+            setTimeout(() => {
+                tile1Element.classList.remove('swap');
+                tile2Element.classList.remove('swap');
+            }, 300);  // Match the transition duration (adjust as necessary)
+
             renderGrid();
         }
 
