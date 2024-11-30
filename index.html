@@ -1,92 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Candy Crush Simplified</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-            background-color: #f7e7ce;
-        }
-
-        .header {
-            padding: 20px;
-            background-color: #ff6f61;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .game-container {
-            display: grid;
-            grid-template-columns: repeat(8, 70px);
-            grid-template-rows: repeat(8, 70px);
-            gap: 5px;
-            justify-content: center;
-            margin: 20px auto;
-        }
-
-        .tile {
-            width: 70px;
-            height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            background-color: #f1f1f1;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: transform 0.2s ease, background-color 0.3s ease, opacity 0.5s ease;
-        }
-
-        .tile:hover {
-            transform: scale(1.1);
-        }
-
-        .tile.match {
-            animation: fadeOut 0.5s ease;
-        }
-
-        @keyframes fadeOut {
-            0% { opacity: 1; }
-            100% { opacity: 0; }
-        }
-
-        .footer {
-            padding: 10px;
-            background-color: #ff6f61;
-            color: white;
-            font-size: 16px;
-        }
-    </style>
-</head>
-<body>
-    <div class="header">Candy Crush Simplified</div>
-    <div class="game-container" id="gameContainer"></div>
-    <div class="footer">
-        Score: <span id="score">0</span> |
-        Cherries Collected: <span id="cherriesCollected">0</span> / 50 |
-        Grapes Collected: <span id="grapesCollected">0</span> / 50
-    </div>
-
-    <script>
-        const gridSize = 8;
-        const candyTypes = ['🍒', '🍋', '🍇', '🍉', '🍍', '🍎'];
-        let grid = [];
-        let score = 0;
-
-        // Target tracking
-        let cherriesCollected = 0;
-        let grapesCollected = 0;
         const targetCherries = 50;
         const targetGrapes = 50;
-
-        let startX, startY, endX, endY;
-        let firstTile = null;
+        let startX, startY, firstTile = null;
 
         // Initialize the game grid
         function initializeGame() {
@@ -112,7 +26,6 @@
                     tile.dataset.col = j;
                     tile.textContent = grid[i][j];
 
-                    // Add swipe and mouse events
                     tile.addEventListener('touchstart', handleTouchStart);
                     tile.addEventListener('touchend', handleTouchEnd);
                     tile.addEventListener('mousedown', handleTouchStart);
@@ -124,8 +37,6 @@
             document.getElementById('score').textContent = score;
             document.getElementById('cherriesCollected').textContent = cherriesCollected;
             document.getElementById('grapesCollected').textContent = grapesCollected;
-
-            // Check if targets are met
             checkTargets();
         }
 
@@ -133,35 +44,29 @@
         function handleTouchStart(event) {
             startX = event.touches ? event.touches[0].clientX : event.clientX;
             startY = event.touches ? event.touches[0].clientY : event.clientY;
-
             const row = parseInt(event.target.dataset.row);
             const col = parseInt(event.target.dataset.col);
-
             firstTile = { row, col };
         }
 
         // Handle touch/mouse end
         function handleTouchEnd(event) {
-            endX = event.changedTouches ? event.changedTouches[0].clientX : event.clientX;
-            endY = event.changedTouches ? event.changedTouches[0].clientY : event.clientY;
-
+            let endX = event.changedTouches ? event.changedTouches[0].clientX : event.clientX;
+            let endY = event.changedTouches ? event.changedTouches[0].clientY : event.clientY;
             if (!firstTile) return;
 
             const diffX = endX - startX;
             const diffY = endY - startY;
-
             let secondTile = null;
 
             // Determine swipe direction
             if (Math.abs(diffX) > Math.abs(diffY)) {
-                // Horizontal swipe
                 if (diffX > 0 && firstTile.col < gridSize - 1) {
                     secondTile = { row: firstTile.row, col: firstTile.col + 1 };
                 } else if (diffX < 0 && firstTile.col > 0) {
                     secondTile = { row: firstTile.row, col: firstTile.col - 1 };
                 }
             } else {
-                // Vertical swipe
                 if (diffY > 0 && firstTile.row < gridSize - 1) {
                     secondTile = { row: firstTile.row + 1, col: firstTile.col };
                 } else if (diffY < 0 && firstTile.row > 0) {
@@ -186,27 +91,11 @@
             firstTile = null;
         }
 
-        // Swap two tiles with a smooth transition
+        // Swap two tiles
         function swapTiles(tile1, tile2) {
-            const tile1Element = document.querySelector(`[data-row="${tile1.row}"][data-col="${tile1.col}"]`);
-            const tile2Element = document.querySelector(`[data-row="${tile2.row}"][data-col="${tile2.col}"]`);
-            const tile1Content = tile1Element.textContent;
-            const tile2Content = tile2Element.textContent;
-
-            // Add a CSS transition class to trigger the effect
-            tile1Element.classList.add('swap');
-            tile2Element.classList.add('swap');
-
-            // Swap the contents
-            tile1Element.textContent = tile2Content;
-            tile2Element.textContent = tile1Content;
-
-            // Remove the class after transition
-            setTimeout(() => {
-                tile1Element.classList.remove('swap');
-                tile2Element.classList.remove('swap');
-            }, 300);  // Match the transition duration (adjust as necessary)
-
+            const temp = grid[tile1.row][tile1.col];
+            grid[tile1.row][tile1.col] = grid[tile2.row][tile2.col];
+            grid[tile2.row][tile2.col] = temp;
             renderGrid();
         }
 
@@ -252,10 +141,12 @@
 
             matches.forEach(match => {
                 if (grid[match.row][match.col] === '🍒') {
-                    cherriesCollected++; // Increment cherries collected when a cherry is matched
+                    cherriesCollected++;
                 } else if (grid[match.row][match.col] === '🍇') {
-                    grapesCollected++; // Increment grapes collected when a grape is matched
+                    grapesCollected++;
                 }
+                const tileElement = document.querySelector(`[data-row="${match.row}"][data-col="${match.col}"]`);
+                tileElement.classList.add('match'); // Add explode animation class
                 grid[match.row][match.col] = null; // Mark as null for removal
             });
 
