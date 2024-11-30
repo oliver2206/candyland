@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tile Flip Challenge - Home</title>
+    <style>
+        /* Basic styling for the home page */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            background-image: url('https://i.pinimg.com/originals/3f/7b/6e/3f7b6e1e82f1d65c27dba8a68d743fea.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px 0;
+        }
+
+        header h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        header nav {
+            margin-top: 10px;
+        }
+
+        header nav a {
+            text-decoration: none;
+            color: #f5faf6;
+            margin: 0 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        header nav a:hover {
+            color: #90ee90;
+        }
+
+        .welcome-section {
+            color: white;
+            margin: 50px auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            z-index: 10;
+            position: relative;
+        }
+
+        .welcome-section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .welcome-section p {
+            font-size: 1.2rem;
+            line-height: 1.5;
+        }
+
+        .game-options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .game-option {
+            display: inline-block;
+            padding: 15px 20px;
+            background-color: #90ee90;
+            color: black;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .game-option:hover {
+            background-color: #76c576;
+        }
+
+        .fruit {
+            position: absolute;
+            width: 200px;  /* Even larger size */
+            height: 200px; /* Even larger size */
+            background-size: contain;
+            background-repeat: no-repeat;
+            animation: bounce 5s infinite ease-in-out;
+        }
+        
+        .fruit {
+            position: absolute;
+            width: 200px;  /* Even larger size */
+            height: 200px; /* Even larger size */
+            background-size: contain;
+            background-repeat: no-repeat;
+            animation: bounce 5s infinite ease-in-out;
+        }
+        
+        /* Keyframes for random bouncing */
+        @keyframes bounce {
+            0% {
+                transform: translate(0, 0); /* Start at original position */
+            }
+            25% {
+                transform: translate(100px, -100px); /* Bounce diagonally to the right and up */
+            }
+            50% {
+                transform: translate(200px, 100px); /* Bounce diagonally to the right and down */
+            }
+            75% {
+                transform: translate(-100px, -50px); /* Bounce diagonally to the left and up */
+            }
+            100% {
+                transform: translate(0, 0); /* End back at original position */
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- JavaScript for dynamic fruits -->
+    <script>
+        const fruits = [
+            '🍎', // Apple
+            '🍌', // Banana
+            '🍓', // Strawberry
+            '🍍', // Pineapple
+            '🍇', // Grapes
+        ];
+
+        const body = document.body;
+
+        // Create fruits dynamically
+        for (let i = 0; i < 10; i++) {
+            const fruitDiv = document.createElement('div');
+            fruitDiv.classList.add('fruit');
+            fruitDiv.textContent = fruits[Math.floor(Math.random() * fruits.length)];
+            fruitDiv.style.left = Math.random() * window.innerWidth + 'px';
+            fruitDiv.style.top = Math.random() * window.innerHeight + 'px';
+            fruitDiv.style.animationDuration = Math.random() * 3 + 2 + 's';
+            body.appendChild(fruitDiv);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Home Page</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to right, #6a11cb, #2575fc); /* Subtle gradient background */
+            position: relative; /* Needed for absolute positioning of fruit */
+            color: #fff; /* Text color for contrast */
+        }
+
+        /* Header Styles */
+        .header {
+            text-align: center;
+            position: relative;
+            z-index: 2; /* Ensures the header is above the background */
+            margin-bottom: 40px;
+        }
+
+        /* Logo Styles */
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 15px;
+            border-radius: 50%;
+            object-fit: contain;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Game Title */
+        h1 {
+            font-size: 40px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #fff;
+            letter-spacing: 2px;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Container for Buttons */
+        .container {
+            text-align: center;
+            margin-top: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Button Styles */
+        .button {
+            display: block;
+            width: 320px;
+            margin: 15px auto;
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            color: #fff;
+            background: #444;
+            text-decoration: none;
+            border: 2px solid #777;
+            border-radius: 15px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            background: #555;
+            transform: scale(1.05);
+            box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.6);
+        }
+
+        .button:active {
+            background: #c52121;
+            transform: scale(0.95);
+        }
+
+        /* Footer Styles */
+        .footer-box {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+            padding: 12px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            color: rgb(220, 10, 10);
+            font-size: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            margin-top: 30px; /* Positioned below the buttons */
+        }
+
+        .coin-board {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .coin-board img {
+            width: 30px;
+            margin-right: 12px;
+            filter: brightness(0) invert(1); /* Lightens the coin/heart icon */
+        }
+
+        /* Bouncing Fruits */
+        .fruit {
+            position: absolute;
+            font-size: 5rem; /* Larger size for fruits */
+            animation: bounce 10s infinite ease-in-out;
+            z-index: 1;
+        }
+
+        @keyframes bounce {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(150px, -200px); }
+            50% { transform: translate(250px, 100px); }
+            75% { transform: translate(-150px, -100px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        /* Styles for Coin and Heart icons inside buttons */
+        .button-coin, .button-heart {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .button-coin img, .button-heart img {
+            width: 25px;
+            margin-right: 10px;
+        }
+
+        /* Style for the plus sign */
+        .plus-sign {
+            margin-left: 10px;
+            font-size: 30px;
+            font-weight: bold;
+            color: #ffeb3b; /* Yellow color */
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Logo and Title -->
+    <div class="header">
+        <img src="./PNGFILE/TILE.png" alt="Logo" class="logo" id="logo">
+        <h1 id="gameTitle">Fruit Fortune Flip</h1>
+    </div>
+
+    <!-- Button Container -->
+    <div class="container">
+        <a class="button" href="./iwant design.html">START</a>
+        
+        <!-- Two buttons for Coin and Heart Life -->
+       
+    </div>
+
+    <script src="./JS FILE FOR GAME TILE/BOUNCE.groovy"></script>  <!-- External JS file for game logic -->
+    <script src="./JS FILE FOR GAME TILE/HEART AND COINS.js"></script> 
+</body>
+</html>
